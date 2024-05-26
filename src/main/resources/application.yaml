@@ -1,0 +1,17 @@
+application:
+  env: ${APPLICATION_ENV:development}
+  name: '@pom.name@'
+  description: '@pom.description@'
+  version: '@pom.version@'
+
+server:
+  port: ${COMEX_API_PORT:8080}
+
+jdbc:
+  db_clients:
+    url: ${JDBC_DBCLIENTS_URL:jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true}
+    username: ${JDBC_DBCLIENTS_USERNAME:user_clients}
+    password: ${JDBC_DBCLIENTS_PASSWORD:password_clients}
+    showSql: ${JDBC_DBCLIENTS_SHOWSQL:false}
+    minimumIdle: 10
+    maximumPoolSize: 10
