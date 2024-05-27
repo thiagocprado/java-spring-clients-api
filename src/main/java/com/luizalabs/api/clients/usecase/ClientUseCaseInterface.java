@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 public interface ClientUseCaseInterface {
     Client createClient(@NonNull CreateClientRequestDTO requestBody) throws BadRequestException;
 
+    void deleteClient(@NonNull Integer id) throws NotFoundException;
+
     PaginatedResultDTO<Client> getAllClients(@NonNull GetAllClientsRequestDTO requestParams);
 
     Client getClientById(@NonNull Integer id) throws NotFoundException;

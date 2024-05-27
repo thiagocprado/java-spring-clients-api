@@ -5,23 +5,32 @@ import com.luizalabs.api.clients.api.v1.dto.client.request.GetAllClientsRequestD
 import com.luizalabs.api.clients.api.v1.dto.client.request.UpdateClientRequestDTO;
 import com.luizalabs.api.clients.common.dto.PaginatedResultDTO;
 import com.luizalabs.api.clients.common.dto.PaginationDTO;
+import com.luizalabs.api.clients.common.helper.JsonHelper;
 import com.luizalabs.api.clients.entity.Client;
+import com.luizalabs.api.clients.entity.ClientFavoriteProduct;
 import com.luizalabs.api.clients.exception.BadRequestException;
 import com.luizalabs.api.clients.exception.NotFoundException;
+import com.luizalabs.api.clients.repository.ClientFavoriteProductRepository;
 import com.luizalabs.api.clients.repository.ClientRepository;
 import com.luizalabs.api.clients.usecase.ClientUseCaseInterface;
+import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class ClientUseCase implements ClientUseCaseInterface {
     private final ClientRepository clientRepository;
+    private final ClientFavoriteProductRepository clientFavoriteProductRepository;
+    private final JsonHelper jsonHelper;
 
     @Autowired
-    public ClientUseCase(ClientRepository clientRepository) {
+    public ClientUseCase(ClientRepository clientRepository, ClientFavoriteProductRepository clientFavoriteProductRepository, JsonHelper jsonHelper) {
         this.clientRepository = clientRepository;
+        this.clientFavoriteProductRepository = clientFavoriteProductRepository;
+        this.jsonHelper = jsonHelper;
     }
 
     @Override
@@ -32,11 +41,22 @@ public class ClientUseCase implements ClientUseCaseInterface {
             throw new BadRequestException("Cliente já cadastrado!");
         }
 
-        var client = new Client();
-        client.setName(requestBody.getName());
-        client.setEmail(requestBody.getEmail());
+        var clientJson = this.jsonHelper.convertObjectToJson(requestBody);
+        var client = this.jsonHelper.convertJsonToClass(clientJson, Client.class);
 
         return this.clientRepository.save(client);
+    }
+
+    @Override
+    public void deleteClient(@NonNull Integer id) throws NotFoundException {
+        var response = this.clientRepository.findById(id);
+
+        if (response.isEmpty()) {
+            throw new NotFoundException("Cliente não encontrado!");
+        }
+
+        this.clientFavoriteProductRepository.deleteByClientId(id);
+        this.clientRepository.deleteById(id);
     }
 
     @Override
@@ -56,7 +76,7 @@ public class ClientUseCase implements ClientUseCaseInterface {
     public Client getClientById(@NonNull Integer id) throws NotFoundException {
         var response = this.clientRepository.findById(id);
 
-        if (!response.isPresent()) {
+        if (response.isEmpty()) {
             throw new NotFoundException("Cliente não encontrado!");
         }
 
@@ -67,7 +87,7 @@ public class ClientUseCase implements ClientUseCaseInterface {
     public Client updateClient(@NonNull UpdateClientRequestDTO requestBody) throws BadRequestException, NotFoundException {
         var clientExists = this.clientRepository.findById(requestBody.getId());
 
-        if (!clientExists.isPresent()) {
+        if (clientExists.isEmpty()) {
             throw new NotFoundException("Cliente não encontrado!");
         }
 

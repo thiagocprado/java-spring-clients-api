@@ -40,6 +40,13 @@ public class ClientController extends BaseController {
         return this.buildResponse(HttpStatus.CREATED, this.deserializeToModel(response, ClientResponseDTO.class));
     }
 
+    @ResponseBody
+    @DeleteMapping("/delete")
+    public ResponseEntity<DefaultResponseDTO> deleteClient(@RequestParam Integer id) throws NotFoundException {
+        this.clientUseCase.deleteClient(id);
+
+        return this.buildResponse(HttpStatus.NO_CONTENT);
+    }
 
     @ResponseBody
     @GetMapping("/list")
@@ -62,7 +69,7 @@ public class ClientController extends BaseController {
     public ResponseEntity<DefaultResponseDTO> updateClient(@RequestBody UpdateClientRequestDTO requestBody) throws NotFoundException, BadRequestException, JsonProcessingException {
         var response = this.clientUseCase.updateClient(requestBody);
 
-        return this.buildResponse(HttpStatus.NO_CONTENT, this.deserializeToModel(response, ClientResponseDTO.class));
+        return this.buildResponse(HttpStatus.OK, this.deserializeToModel(response, ClientResponseDTO.class));
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -80,4 +87,3 @@ public class ClientController extends BaseController {
         return errors;
     }
 }
-
