@@ -66,24 +66,9 @@ public class ClientController extends BaseController {
 
     @ResponseBody
     @PutMapping("/update")
-    public ResponseEntity<DefaultResponseDTO> updateClient(@RequestBody UpdateClientRequestDTO requestBody) throws NotFoundException, BadRequestException, JsonProcessingException {
+    public ResponseEntity<DefaultResponseDTO> updateClient(@Valid @RequestBody UpdateClientRequestDTO requestBody) throws NotFoundException, BadRequestException, JsonProcessingException {
         var response = this.clientUseCase.updateClient(requestBody);
 
         return this.buildResponse(HttpStatus.OK, this.deserializeToModel(response, ClientResponseDTO.class));
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-
-        Map<String, String> errors = new HashMap<>();
-
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-
-        return errors;
     }
 }

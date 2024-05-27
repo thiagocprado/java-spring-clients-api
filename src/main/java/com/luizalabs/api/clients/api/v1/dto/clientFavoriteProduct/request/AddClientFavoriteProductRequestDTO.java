@@ -21,11 +21,11 @@ public class AddClientFavoriteProductRequestDTO implements Serializable {
 
     @Valid
 
-    @NotNull(message = "Id do cliente não pode estar em branco")
-    @NotBlank(message = "Id do cliente não pode estar em branco")
+    @NotBlank(message = "Id do cliente não pode estar em branco!")
+    @NotNull(message = "Id do cliente não pode ser nulo!")
     private Integer clientId;
 
-    @NotNull(message = "Id do produto não pode estar em branco")
-    @NotBlank(message = "Id do produto não pode estar em branco")
+    @NotBlank(message = "Id do produto não pode estar em branco!")
+    @NotNull(message = "Id do produto não pode ser nulo!")
     private String productId;
 }

@@ -1,7 +1,8 @@
 
 package com.luizalabs.api.clients.api.v1.dto.client.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,15 +20,16 @@ public class UpdateClientRequestDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 6234040074127742949L;
 
-    @NotNull(message = "Id do cliente não pode estar em branco")
-    @JsonProperty("id")
+    @NotBlank(message = "Id do cliente não pode estar em branco!")
+    @NotNull(message = "Id do cliente não pode ser nulo!")
     private Integer id;
 
-    @NotNull(message = "Nome do cliente não pode estar em branco")
-    @JsonProperty("name")
+    @NotBlank(message = "Nome do cliente não pode estar em branco!")
+    @NotNull(message = "Nome do cliente não pode ser nulo!")
     private String name;
 
-    @NotNull(message = "E-mail do cliente não pode estar em branco")
-    @JsonProperty("email")
+    @NotBlank(message = "E-mail do cliente não pode estar em branco!")
+    @NotNull(message = "E-mail do cliente não pode ser nulo!")
+    @Email(message = "E-mail inválido!")
     private String email;
 }
