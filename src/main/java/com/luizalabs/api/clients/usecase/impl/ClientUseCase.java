@@ -7,7 +7,6 @@ import com.luizalabs.api.clients.common.dto.PaginatedResultDTO;
 import com.luizalabs.api.clients.common.dto.PaginationDTO;
 import com.luizalabs.api.clients.common.helper.JsonHelper;
 import com.luizalabs.api.clients.entity.Client;
-import com.luizalabs.api.clients.entity.ClientFavoriteProduct;
 import com.luizalabs.api.clients.exception.BadRequestException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.repository.ClientFavoriteProductRepository;
