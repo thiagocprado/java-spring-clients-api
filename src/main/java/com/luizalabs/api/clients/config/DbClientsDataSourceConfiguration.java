@@ -21,7 +21,7 @@ import java.util.Map;
         transactionManagerRef = "transactionManagerDbClients")
 public class DbClientsDataSourceConfiguration extends DataSourceConfiguration {
 
-    private static final String[] MODEL_PACKAGES = {"com.luizalabs.api.clients.entities"};
+    private static final String[] MODEL_PACKAGES = {"com.luizalabs.api.clients.entity"};
 
     @Autowired
     DbClientsDataSourceConfiguration(
@@ -64,6 +64,6 @@ public class DbClientsDataSourceConfiguration extends DataSourceConfiguration {
     }
 
     private Map<String, String> jpaProperties() {
-        return buildProperties("org.hibernate.dialect.SQLServer2012Dialect");
+        return buildProperties("org.hibernate.dialect.MySQLDialect");
     }
 }
