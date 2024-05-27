@@ -7,6 +7,12 @@ application:
 server:
   port: ${COMEX_API_PORT:8080}
 
+spring:
+  flyway:
+    url: ${JDBC_DBCLIENTS_URL:jdbc:mysql://localhost:3306/db_clients}
+    user: ${JDBC_DBCLIENTS_USERNAME:user_clients}
+    password: ${JDBC_DBCLIENTS_PASSWORD:password_clients}
+
 jdbc:
   db_clients:
     url: ${JDBC_DBCLIENTS_URL:jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true}
