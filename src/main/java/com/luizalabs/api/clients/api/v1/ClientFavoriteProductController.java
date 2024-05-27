@@ -42,7 +42,7 @@ public class ClientFavoriteProductController extends BaseController {
 
     @ResponseBody
     @DeleteMapping("/delete")
-    public ResponseEntity<DefaultResponseDTO> deleteClientFavoriteProduct(@NonNull DeleteClientFavoriteProductRequestDTO requestParams) throws NotFoundException {
+    public ResponseEntity<DefaultResponseDTO> deleteClientFavoriteProduct(@Valid DeleteClientFavoriteProductRequestDTO requestParams) throws NotFoundException {
         this.clientUseCase.getClientById(requestParams.getClientId());
 
         this.clientFavoriteProductUseCase.deleteClientFavoriteProduct(requestParams);
@@ -52,7 +52,7 @@ public class ClientFavoriteProductController extends BaseController {
 
     @ResponseBody
     @GetMapping("/list")
-    public ResponseEntity<DefaultResponseDTO> getClientFavoriteProducts(@NonNull GetAllClientFavoriteProductsRequestDTO requestParams) throws NotFoundException, JsonProcessingException {
+    public ResponseEntity<DefaultResponseDTO> getClientFavoriteProducts(@Valid GetAllClientFavoriteProductsRequestDTO requestParams) throws NotFoundException, JsonProcessingException {
         this.clientUseCase.getClientById(requestParams.getClientId());
 
         var response = this.clientFavoriteProductUseCase.getClientFavoriteProducts(requestParams);

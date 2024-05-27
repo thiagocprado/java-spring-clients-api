@@ -1,6 +1,5 @@
 package com.luizalabs.api.clients.api.v1.dto.clientFavoriteProduct.request;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -16,9 +15,7 @@ public class AddClientFavoriteProductRequestDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 7323196622927162989L;
 
-    @Valid
-
-    @Positive(message = "Insira um Id do cliente válido!")
+    @Positive(message = "Insira um id do cliente válido!")
     @NotNull(message = "Id do cliente não pode ser nulo!")
     private Integer clientId;
 

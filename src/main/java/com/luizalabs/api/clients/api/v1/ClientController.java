@@ -1,9 +1,7 @@
 package com.luizalabs.api.clients.api.v1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.luizalabs.api.clients.api.v1.dto.client.request.CreateClientRequestDTO;
-import com.luizalabs.api.clients.api.v1.dto.client.request.GetAllClientsRequestDTO;
-import com.luizalabs.api.clients.api.v1.dto.client.request.UpdateClientRequestDTO;
+import com.luizalabs.api.clients.api.v1.dto.client.request.*;
 import com.luizalabs.api.clients.api.v1.dto.client.response.ClientResponseDTO;
 import com.luizalabs.api.clients.common.controller.BaseController;
 import com.luizalabs.api.clients.common.dto.DefaultResponseDTO;
@@ -38,15 +36,15 @@ public class ClientController extends BaseController {
 
     @ResponseBody
     @DeleteMapping("/delete")
-    public ResponseEntity<DefaultResponseDTO> deleteClient(@RequestParam Integer id) throws NotFoundException {
-        this.clientUseCase.deleteClient(id);
+    public ResponseEntity<DefaultResponseDTO> deleteClient(@Valid DeleteClientRequestDTO requestParams) throws NotFoundException {
+        this.clientUseCase.deleteClient(requestParams.getId());
 
         return this.buildResponse(HttpStatus.NO_CONTENT);
     }
 
     @ResponseBody
     @GetMapping("/list")
-    public ResponseEntity<DefaultResponseDTO> getAllClients(@NonNull GetAllClientsRequestDTO requestParams) throws JsonProcessingException {
+    public ResponseEntity<DefaultResponseDTO> getAllClients(@Valid GetAllClientsRequestDTO requestParams) throws JsonProcessingException {
         var response = this.clientUseCase.getAllClients(requestParams);
 
         return this.buildResponse(HttpStatus.OK, this.serializeToDto(response.getResults(), ClientResponseDTO.class), response.getPagination());
@@ -54,8 +52,8 @@ public class ClientController extends BaseController {
 
     @ResponseBody
     @GetMapping("/details")
-    public ResponseEntity<DefaultResponseDTO> getClientById(@RequestParam Integer id) throws NotFoundException, JsonProcessingException {
-        var response = this.clientUseCase.getClientById(id);
+    public ResponseEntity<DefaultResponseDTO> getClientById(@Valid GetClientDetailsRequestDTO requestParams) throws NotFoundException, JsonProcessingException {
+        var response = this.clientUseCase.getClientById(requestParams.getId());
 
         return this.buildResponse(HttpStatus.OK, this.deserializeToModel(response, ClientResponseDTO.class));
     }

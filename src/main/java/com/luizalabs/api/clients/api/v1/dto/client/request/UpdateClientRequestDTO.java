@@ -17,8 +17,8 @@ public class UpdateClientRequestDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 6234040074127742949L;
 
-    @Positive(message = "Insira um id válido")
-    @NotNull(message = "Id do cliente não pode ser nulo!")
+    @Positive(message = "Insira um id válido!")
+    @NotNull(message = "Id não pode ser nulo!")
     private Integer id;
 
     @NotBlank(message = "Nome do cliente não pode estar em branco!")
