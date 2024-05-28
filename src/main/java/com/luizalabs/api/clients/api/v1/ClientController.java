@@ -10,6 +10,7 @@ import com.luizalabs.api.clients.api.v1.dto.client.response.ClientResponseDTO;
 import com.luizalabs.api.clients.common.controller.BaseController;
 import com.luizalabs.api.clients.common.dto.DefaultResponseDTO;
 import com.luizalabs.api.clients.exception.BadRequestException;
+import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.usecase.ClientUseCaseInterface;
 import jakarta.validation.Valid;
@@ -31,7 +32,7 @@ public class ClientController extends BaseController {
 
     @ResponseBody
     @PostMapping("/create")
-    public ResponseEntity<DefaultResponseDTO> createClient(@Valid @RequestBody CreateClientRequestDTO requestBody) throws BadRequestException, JsonProcessingException {
+    public ResponseEntity<DefaultResponseDTO> createClient(@Valid @RequestBody CreateClientRequestDTO requestBody) throws ConflictException, JsonProcessingException {
         var response = this.clientUseCase.createClient(requestBody);
 
         return this.buildResponse(HttpStatus.CREATED, this.deserializeToModel(response, ClientResponseDTO.class));

@@ -3,6 +3,7 @@ package com.luizalabs.api.clients.usecase.impl;
 import com.luizalabs.api.clients.BaseTests;
 import com.luizalabs.api.clients.common.helper.JsonHelper;
 import com.luizalabs.api.clients.exception.BadRequestException;
+import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.repository.ClientFavoriteProductRepository;
 import com.luizalabs.api.clients.seeder.ClientFavoriteProductSeeder;
@@ -39,7 +40,7 @@ public class ClientFavoriteProductUseCaseTest extends BaseTests {
     }
 
     @Test
-    void addClientFavoriteProduct() throws BadRequestException, NotFoundException {
+    void addClientFavoriteProduct() throws ConflictException, NotFoundException {
         var clientFavoriteProductRepository = ClientFavoriteProductSeeder.clientFavoriteProductRepostiory();
         var clientFavoriteProductRequest = ClientFavoriteProductSeeder.addClientFavoriteProductRequestDTO();
 
@@ -58,7 +59,7 @@ public class ClientFavoriteProductUseCaseTest extends BaseTests {
 
         Mockito.when(this.clientFavoriteProductRepository.findByClientIdAndProductId(anyInt(), anyString())).thenReturn(Optional.ofNullable(clientFavoriteProductRepository));
 
-        assertThrows(BadRequestException.class, () -> this.clientFavoriteProductUseCase.addClientFavoriteProduct(clientFavoriteProductRequest));
+        assertThrows(ConflictException.class, () -> this.clientFavoriteProductUseCase.addClientFavoriteProduct(clientFavoriteProductRequest));
     }
 
     @Test

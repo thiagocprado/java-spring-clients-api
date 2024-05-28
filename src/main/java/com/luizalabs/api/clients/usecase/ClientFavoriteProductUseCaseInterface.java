@@ -6,6 +6,7 @@ import com.luizalabs.api.clients.api.v1.dto.clientFavoriteProduct.request.GetAll
 import com.luizalabs.api.clients.common.dto.PaginatedResultDTO;
 import com.luizalabs.api.clients.entity.ClientFavoriteProduct;
 import com.luizalabs.api.clients.exception.BadRequestException;
+import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.service.dto.ProductDTO;
 import lombok.NonNull;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ClientFavoriteProductUseCaseInterface {
-    ClientFavoriteProduct addClientFavoriteProduct(@NonNull AddClientFavoriteProductRequestDTO requestBody) throws BadRequestException, NotFoundException;
+    ClientFavoriteProduct addClientFavoriteProduct(@NonNull AddClientFavoriteProductRequestDTO requestBody) throws ConflictException, NotFoundException;
 
     void deleteClientFavoriteProduct(@NonNull DeleteClientFavoriteProductRequestDTO requestParams) throws NotFoundException;
 

@@ -8,6 +8,7 @@ import com.luizalabs.api.clients.common.dto.PaginationDTO;
 import com.luizalabs.api.clients.common.helper.JsonHelper;
 import com.luizalabs.api.clients.entity.Client;
 import com.luizalabs.api.clients.exception.BadRequestException;
+import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.repository.ClientFavoriteProductRepository;
 import com.luizalabs.api.clients.repository.ClientRepository;
@@ -33,11 +34,11 @@ public class ClientUseCase implements ClientUseCaseInterface {
     }
 
     @Override
-    public Client createClient(@NonNull CreateClientRequestDTO requestBody) throws BadRequestException {
+    public Client createClient(@NonNull CreateClientRequestDTO requestBody) throws ConflictException {
         var clientExists = this.clientRepository.findByEmail(requestBody.getEmail());
 
         if (clientExists.isPresent()) {
-            throw new BadRequestException("Cliente já cadastrado!");
+            throw new ConflictException("Cliente já cadastrado!");
         }
 
         var clientJson = this.jsonHelper.convertObjectToJson(requestBody);

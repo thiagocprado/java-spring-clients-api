@@ -8,6 +8,7 @@ import com.luizalabs.api.clients.api.v1.dto.clientFavoriteProduct.response.Clien
 import com.luizalabs.api.clients.common.controller.BaseController;
 import com.luizalabs.api.clients.common.dto.DefaultResponseDTO;
 import com.luizalabs.api.clients.exception.BadRequestException;
+import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.usecase.ClientFavoriteProductUseCaseInterface;
 import com.luizalabs.api.clients.usecase.ClientUseCaseInterface;
@@ -32,7 +33,7 @@ public class ClientFavoriteProductController extends BaseController {
 
     @ResponseBody
     @PostMapping("/add")
-    public ResponseEntity<DefaultResponseDTO> addClientFavoriteProduct(@Valid @RequestBody AddClientFavoriteProductRequestDTO requestBody) throws BadRequestException, JsonProcessingException, NotFoundException {
+    public ResponseEntity<DefaultResponseDTO> addClientFavoriteProduct(@Valid @RequestBody AddClientFavoriteProductRequestDTO requestBody) throws ConflictException, JsonProcessingException, NotFoundException {
         this.clientUseCase.getClientById(requestBody.getClientId());
 
         var response = this.clientFavoriteProductUseCase.addClientFavoriteProduct(requestBody);

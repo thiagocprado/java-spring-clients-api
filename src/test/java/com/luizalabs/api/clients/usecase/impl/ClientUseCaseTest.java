@@ -3,6 +3,7 @@ package com.luizalabs.api.clients.usecase.impl;
 import com.luizalabs.api.clients.BaseTests;
 import com.luizalabs.api.clients.common.helper.JsonHelper;
 import com.luizalabs.api.clients.exception.BadRequestException;
+import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.repository.ClientFavoriteProductRepository;
 import com.luizalabs.api.clients.repository.ClientRepository;
@@ -39,7 +40,7 @@ public class ClientUseCaseTest extends BaseTests {
     }
 
     @Test
-    void createClient() throws BadRequestException {
+    void createClient() throws ConflictException {
         var clientRepository = ClientSeeder.clientRepository();
         var clientRequest = ClientSeeder.createClientRequestDTO();
 
@@ -58,7 +59,7 @@ public class ClientUseCaseTest extends BaseTests {
 
         Mockito.when(this.clientRepository.findByEmail(anyString())).thenReturn(Optional.ofNullable(clientRepository));
 
-        assertThrows(BadRequestException.class, () -> this.clientUseCase.createClient(clientRequest));
+        assertThrows(ConflictException.class, () -> this.clientUseCase.createClient(clientRequest));
     }
 
     @Test
