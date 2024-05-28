@@ -10,8 +10,6 @@ Para rodar este projeto é recomendado o uso das seguintes ferramentas:
 - [Intellij](https://www.jetbrains.com/idea/download)
 - [Postman](https://www.postman.com/downloads/)
 
-**OBS**: A coleção com as requisições está no diretório **src\main\java\com\luizalabs\api\clients\docs**.
-
 ## Inicializando container docker
 
 O banco de dados utilizado para este projeto foi o **MySQL** na versão 8.0.
@@ -39,6 +37,7 @@ Este projeto utiliza as seguintes tecnologias
 - Maven 3.9.6
 
 **Observação:**
+
 - Antes de iniciar o projeto, execute o passo anterior **Inicilaizando Docker** .
 - Certifique-se de que as tecnologias citadas acima estejam instaladas em sua maquina .
 - As tabelas referentes ao projeto serão criadas automáticamente.
@@ -47,6 +46,8 @@ Este projeto utiliza as seguintes tecnologias
 ## Postman
 
 Abaixo está um tutorial de como importar uma collection no postman:
+
+- Coleção com as requisições está na pasta **docs** na raiz do projeto.
 
 [Postman - Como usar e importar uma Collection](https://suporte.agoraos.com.br/hc/pt-br/articles/5671239767579-Postman-Como-usar-e-importar-uma-Collection)
 
@@ -80,7 +81,7 @@ Para rodar o projeto é preciso configurar as variáveis de ambiente do projeto:
 Caso esteja utilizando o Intellij (recomendado), utilize as variáveis abaixo:
 
 ```
-APPLICATION_ENV=development;SERVER_PORT=8080;SPRING_FLYWAY_URL=jdbc:mysql://localhost:3306/db_clients;SPRING_FLYWAY_USERNAME=user_clients;SPRING_FLYWAY_PASSWORD=password_clients;JDBC_DBCLIENTS_URL=jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true;JDBC_DBCLIENTS_USERNAME=user_clients;JDBC_DBCLIENTS_PASSWORD=password_clients
+APPLICATION_ENV=development;JDBC_DBCLIENTS_PASSWORD=password_clients;JDBC_DBCLIENTS_URL=jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true;JDBC_DBCLIENTS_USERNAME=user_clients;SERVER_PORT=8080;SPRING_FLYWAY_PASSWORD=password_clients;SPRING_FLYWAY_URL=jdbc:mysql://localhost:3306/db_clients;SPRING_FLYWAY_USERNAME=user_clients;FEIGN_CHALLENGEAPI_URL=http://challenge-api.luizalabs.com/api;FEIGN_CHALLENGEAPI_NAME=challenge-api
 ```
 
 ## Execução do projeto

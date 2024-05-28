@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(url = "http://challenge-api.luizalabs.com/api/product", name = "challenge-api")
+@FeignClient(url = "${feign.challengeApi.url}/product", name = "${feign.challengeApi.name}")
 public interface ProductService {
 
     @GetMapping("/{id}/")

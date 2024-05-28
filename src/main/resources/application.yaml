@@ -18,3 +18,8 @@ jdbc:
     url: ${JDBC_DBCLIENTS_URL}
     username: ${JDBC_DBCLIENTS_USERNAME}
     password: ${JDBC_DBCLIENTS_PASSWORD}
+
+feign:
+  challengeApi:
+    name: ${FEIGN_CHALLENGEAPI_NAME}
+    url: ${FEIGN_CHALLENGEAPI_URL}

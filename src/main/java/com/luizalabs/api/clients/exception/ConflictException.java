@@ -14,7 +14,7 @@ import java.io.Serial;
 @AllArgsConstructor
 public class ConflictException extends Exception {
     @Serial
-    private static final long serialVersionUID = 4232856805530216765L;
+    private static final long serialVersionUID = -4824370880971954781L;
 
     private final HttpStatus statusCode;
 
