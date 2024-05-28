@@ -40,9 +40,18 @@ Lembre-se de configurar seu Intellij para a versão adequada do sdk do java.
 **OBS:** Antes de iniciar o projeto, execute o passo anterior **Inicilaizando Docker**.
 
 As tabelas referentes ao projeto serão criadas automáticamente.
+
 ## Postman
 
 Abaixo está um tutorial de como importar uma collection no postman:
 
 [Postman - Como usar e importar uma Collection](https://suporte.agoraos.com.br/hc/pt-br/articles/5671239767579-Postman-Como-usar-e-importar-uma-Collection)
 
+## Execução dos teste
+
+Para rodar os testes, utilize a própria IDE (Intellij), seguindo os seguintes passos:
+
+- Abra o diretório **src\test\java\com\luizalabs\api\clients\usecase\impl**
+- Com o diretório aberto, clique em um dos casos de teste com o botão direito do mouse
+- Procure pela opção **More / Run Debug** ou **Mais / Rodar Debug**
+- Selecione a opção **Run 'usecase' with Coverage** ou **Rodar 'usecase' com Cobertura**
