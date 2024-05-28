@@ -32,11 +32,16 @@ Com os comando acima, temos nosso container do mysql rodando.
 
 ## Intellij
 
-Este projeto foi desenvolvido utilzando a versão 17 do java, aliado a versão 3.1.1 do spring boot.
+Este projeto utiliza as seguintes tecnologias
 
+- Java 17
+- SpringBoot 3.1.1
+- Maven 3.9.6
+-
 Lembre-se de configurar seu Intellij para a versão 17 do sdk do java.
 
-**OBS:** Antes de iniciar o projeto, execute o passo anterior **Inicilaizando Docker**.
+**OBS:** Antes de iniciar o projeto, execute o passo anterior **Inicializando Docker** e certifique-se de
+que as tecnologias citadas foram instaladas.
 
 As tabelas referentes ao projeto serão criadas automáticamente.
 
