@@ -81,7 +81,7 @@ public class ClientFavoriteProductUseCase implements ClientFavoriteProductUseCas
 
     private ProductDTO getProductDetails(@NonNull String id) throws NotFoundException {
         try {
-            return this.productService.getProduct(id);
+            return this.productService.getProductDetails(id);
         } catch (Exception e) {
             throw new NotFoundException("Produto não encontrado!");
         }
