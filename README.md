@@ -73,6 +73,12 @@ Para rodar o projeto é preciso configurar as variáveis de ambiente do projeto:
 | JDBC_DBCLIENTS_USERNAME | user_clients                                                        |
 | JDBC_DBCLIENTS_PASSWORD | password_clients                                                    |
 
+Caso esteja utilizando o Intellij (recomendado), utilize as variáveis abaixo:
+
+```
+APPLICATION_ENV=development;SERVER_PORT=8080;SPRING_FLYWAY_URL=jdbc:mysql://localhost:3306/db_clients;SPRING_FLYWAY_USERNAME=user_clients;SPRING_FLYWAY_PASSWORD=password_clients;JDBC_DBCLIENTS_URL=jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true;JDBC_DBCLIENTS_USERNAME=user_clients;JDBC_DBCLIENTS_PASSWORD=password_clients
+```
+
 ## Execução do projeto
 
 Para rodar o projeto, utilize a própria IDE (Intellij), seguindo os seguintes passos:
