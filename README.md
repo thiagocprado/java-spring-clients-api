@@ -34,7 +34,7 @@ Com os comando acima, temos nosso container do mysql rodando.
 
 Este projeto foi desenvolvido utilzando a versão 17 do java, aliado a versão 3.1.1 do spring boot.
 
-Lembre-se de configurar seu Intellij para a versão adequada do sdk do java.
+Lembre-se de configurar seu Intellij para a versão 17 do sdk do java.
 
 **OBS:** Antes de iniciar o projeto, execute o passo anterior **Inicilaizando Docker**.
 
@@ -79,6 +79,6 @@ Para rodar o projeto, utilize a própria IDE (Intellij), seguindo os seguintes p
 
 **OBS:** Execute o passo **Ambiente** antes de iniciar o projeto.
 
-- Abra o diretório **src\test\java\com\luizalabs\api\clients**
+- Abra o diretório **src\main\java\com\luizalabs\api\clients**
 - Com o diretório aberto, clique com o botão direito do mouse em cima de **ClientsApplication**
 - Selecione a opção **Run ClientsApplication.main()**
