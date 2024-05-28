@@ -1,23 +1,20 @@
 application:
-  env: ${APPLICATION_ENV:development}
+  env: ${APPLICATION_ENV}
   name: '@pom.name@'
   description: '@pom.description@'
   version: '@pom.version@'
 
 server:
-  port: ${COMEX_API_PORT:8080}
+  port: ${SERVER_PORT}
 
 spring:
   flyway:
-    url: ${JDBC_DBCLIENTS_URL:jdbc:mysql://localhost:3306/db_clients}
-    user: ${JDBC_DBCLIENTS_USERNAME:user_clients}
-    password: ${JDBC_DBCLIENTS_PASSWORD:password_clients}
+    url: ${SPRING_FLYWAY_URL}
+    user: ${SPRING_FLYWAY_USERNAME}
+    password: ${SPRING_FLYWAY_PASSWORD}
 
 jdbc:
-  db_clients:
-    url: ${JDBC_DBCLIENTS_URL:jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true}
-    username: ${JDBC_DBCLIENTS_USERNAME:user_clients}
-    password: ${JDBC_DBCLIENTS_PASSWORD:password_clients}
-    showSql: ${JDBC_DBCLIENTS_SHOWSQL:false}
-    minimumIdle: 10
-    maximumPoolSize: 10
+  dbClients:
+    url: ${JDBC_DBCLIENTS_URL}
+    username: ${JDBC_DBCLIENTS_USERNAME}
+    password: ${JDBC_DBCLIENTS_PASSWORD}

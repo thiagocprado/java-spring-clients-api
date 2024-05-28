@@ -20,9 +20,6 @@ public abstract class DataSourceConfiguration {
   private final String url;
   private final String username;
   private final String password;
-  private final String showSql;
-  private final int minimumIdle;
-  private final int maximumPoolSize;
 
   public abstract DataSource dataSource() throws SQLException;
 
@@ -41,9 +38,6 @@ public abstract class DataSourceConfiguration {
         .password(password)
         .build();
 
-    hikariDataSource.setMinimumIdle(minimumIdle);
-    hikariDataSource.setMaximumPoolSize(maximumPoolSize);
-
     return hikariDataSource;
   }
 
@@ -51,15 +45,9 @@ public abstract class DataSourceConfiguration {
 
     var properties = new HashMap<String, String>();
 
-    if (!showSql.isEmpty()) {
-      properties.put("hibernate.show_sql", showSql);
-    }
-
     properties.put("hibernate.hbm2ddl.auto", "none");
     properties.put("hibernate.dialect", dialect);
 
     return properties;
-
   }
-
 }

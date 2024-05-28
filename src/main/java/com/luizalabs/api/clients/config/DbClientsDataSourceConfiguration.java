@@ -25,25 +25,20 @@ public class DbClientsDataSourceConfiguration extends DataSourceConfiguration {
 
     @Autowired
     DbClientsDataSourceConfiguration(
-            @Value("${jdbc.db_clients.url}") String url,
-            @Value("${jdbc.db_clients.username}") String username,
-            @Value("${jdbc.db_clients.password}") String password,
-            @Value("${jdbc.db_clients.showSql}") String showSql,
-            @Value("${jdbc.db_clients.minimumIdle}") int minimumIdle,
-            @Value("${jdbc.db_clients.maximumPoolSize}") int maximumPoolSize) {
-        super(url, username, password, showSql, minimumIdle, maximumPoolSize);
+            @Value("${jdbc.dbClients.url}") String url,
+            @Value("${jdbc.dbClients.username}") String username,
+            @Value("${jdbc.dbClients.password}") String password) {
+        super(url, username, password);
     }
 
     @Bean("dataSourceClients")
     @Override
-    @Primary
     public DataSource dataSource() {
         return buildDatasource();
     }
 
     @Bean("entityManagerFactoryDbClients")
     @Override
-    @Primary
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             EntityManagerFactoryBuilder builder,
             @Qualifier("dataSourceClients") DataSource dataSource) {
@@ -57,7 +52,6 @@ public class DbClientsDataSourceConfiguration extends DataSourceConfiguration {
 
     @Bean("transactionManagerDbClients")
     @Override
-    @Primary
     public JpaTransactionManager transactionManager(
             @Qualifier("entityManagerFactoryDbClients") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
