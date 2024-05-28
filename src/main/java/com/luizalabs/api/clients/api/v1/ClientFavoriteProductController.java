@@ -12,7 +12,7 @@ import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.usecase.ClientFavoriteProductUseCaseInterface;
 import com.luizalabs.api.clients.usecase.ClientUseCaseInterface;
 import jakarta.validation.Valid;
-import lombok.NonNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +52,7 @@ public class ClientFavoriteProductController extends BaseController {
 
     @ResponseBody
     @GetMapping("/list")
-    public ResponseEntity<DefaultResponseDTO> getClientFavoriteProducts(@Valid GetAllClientFavoriteProductsRequestDTO requestParams) throws NotFoundException, JsonProcessingException {
+    public ResponseEntity<DefaultResponseDTO> getClientFavoriteProducts(@Valid GetAllClientFavoriteProductsRequestDTO requestParams) throws NotFoundException {
         this.clientUseCase.getClientById(requestParams.getClientId());
 
         var response = this.clientFavoriteProductUseCase.getClientFavoriteProducts(requestParams);

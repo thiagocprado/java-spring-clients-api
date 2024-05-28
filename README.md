@@ -29,7 +29,7 @@ $ docker build -t mysql_image .
 $ docker run -d --name mysql_container -p 3306:3306 mysql_image
 ```
 
-Com os comando acima, temos nosso container com o mysql já funcionado.
+Com os comando acima, temos nosso container com o mysql já rodando.
 
 ## Intellij
 

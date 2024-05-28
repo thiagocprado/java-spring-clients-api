@@ -11,21 +11,10 @@ import java.math.BigDecimal;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductDTO {
-    @JsonProperty("id")
     private String id;
-
-    @JsonProperty("brand")
     private String brand;
-
-    @JsonProperty("image")
     private String image;
-
-    @JsonProperty("title")
     private String title;
-
-    @JsonProperty("price")
     private BigDecimal price;
-
-    @JsonProperty("reviewScore")
     private BigDecimal reviewScore;
 }

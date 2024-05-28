@@ -79,8 +79,7 @@ public class ClientFavoriteProductUseCase implements ClientFavoriteProductUseCas
         return new PaginatedResultDTO<>(products, pagination);
     }
 
-
-    public ProductDTO getProductDetails(@NonNull String id) throws NotFoundException {
+    private ProductDTO getProductDetails(@NonNull String id) throws NotFoundException {
         try {
             return this.productService.getProduct(id);
         } catch (Exception e) {

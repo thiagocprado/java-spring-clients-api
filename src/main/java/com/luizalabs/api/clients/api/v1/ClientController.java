@@ -1,7 +1,11 @@
 package com.luizalabs.api.clients.api.v1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.luizalabs.api.clients.api.v1.dto.client.request.*;
+import com.luizalabs.api.clients.api.v1.dto.client.request.CreateClientRequestDTO;
+import com.luizalabs.api.clients.api.v1.dto.client.request.DeleteClientRequestDTO;
+import com.luizalabs.api.clients.api.v1.dto.client.request.GetAllClientsRequestDTO;
+import com.luizalabs.api.clients.api.v1.dto.client.request.GetClientDetailsRequestDTO;
+import com.luizalabs.api.clients.api.v1.dto.client.request.UpdateClientRequestDTO;
 import com.luizalabs.api.clients.api.v1.dto.client.response.ClientResponseDTO;
 import com.luizalabs.api.clients.common.controller.BaseController;
 import com.luizalabs.api.clients.common.dto.DefaultResponseDTO;
@@ -9,7 +13,6 @@ import com.luizalabs.api.clients.exception.BadRequestException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.usecase.ClientUseCaseInterface;
 import jakarta.validation.Valid;
-import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
