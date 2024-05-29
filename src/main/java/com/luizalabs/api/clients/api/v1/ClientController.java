@@ -64,7 +64,7 @@ public class ClientController extends BaseController {
 
     @ResponseBody
     @PutMapping("/update")
-    public ResponseEntity<DefaultResponseDTO> updateClient(@Valid @RequestBody UpdateClientRequestDTO requestBody) throws NotFoundException, BadRequestException, JsonProcessingException {
+    public ResponseEntity<DefaultResponseDTO> updateClient(@Valid @RequestBody UpdateClientRequestDTO requestBody) throws NotFoundException, ConflictException, JsonProcessingException {
         var response = this.clientUseCase.updateClient(requestBody);
 
         return this.buildResponse(HttpStatus.OK, this.deserializeToModel(response, ClientResponseDTO.class));

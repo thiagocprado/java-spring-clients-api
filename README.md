@@ -26,11 +26,11 @@ $ docker build -t mysql_image .
 $ docker run -d --name mysql_container -p 3306:3306 mysql_image
 ```
 
-Com os comando acima, temos nosso container do mysql rodando.
+Com os comandos acima, temos nosso container do mysql rodando.
 
 ## Intellij
 
-Este projeto utiliza as seguintes tecnologias
+Este projeto utiliza as seguintes tecnologias:
 
 - Java 17
 - SpringBoot 3.1.1
@@ -38,9 +38,9 @@ Este projeto utiliza as seguintes tecnologias
 
 **Observação:**
 
-- Antes de iniciar o projeto, execute o passo anterior **Inicilaizando Docker** .
-- Certifique-se de que as tecnologias citadas acima estejam instaladas em sua maquina .
-- As tabelas referentes ao projeto serão criadas automáticamente.
+- Antes de iniciar o projeto, execute o passo anterior **Inicializando Docker**.
+- Certifique-se de que as tecnologias citadas acima estejam instaladas em sua máquina.
+- As tabelas referentes ao projeto serão criadas automaticamente.
 - Lembre-se de configurar seu Intellij para a versão 17 do sdk do java.
 
 ## Postman
@@ -55,10 +55,10 @@ Abaixo está um tutorial de como importar uma collection no postman:
 
 Para rodar os testes, utilize a própria IDE (Intellij), seguindo os seguintes passos:
 
-- Abra o diretório **src\test\java\com\luizalabs\api\clients\usecase\impl**
-- Com o diretório aberto, clique em um dos casos de teste com o botão direito do mouse
-- Procure pela opção **More / Run Debug** ou **Mais / Rodar Debug**
-- Selecione a opção **Run 'usecase' with Coverage** ou **Rodar 'usecase' com Cobertura**
+- Abra o diretório **src\test\java\com\luizalabs\api\clients\usecase\impl**.
+- Com o diretório aberto, clique em um dos casos de teste com o botão direito do mouse.
+- Procure pela opção **More / Run Debug** ou **Mais / Rodar Debug**.
+- Selecione a opção **Run 'usecase' with Coverage** ou **Rodar 'usecase' com Cobertura**.
 
 ## Ambiente
 
@@ -77,6 +77,9 @@ Para rodar o projeto é preciso configurar as variáveis de ambiente do projeto:
 | JDBC_DBCLIENTS_URL      | jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true |
 | JDBC_DBCLIENTS_USERNAME | user_clients                                                        |
 | JDBC_DBCLIENTS_PASSWORD | password_clients                                                    |
+|                         |                                                                     |
+| FEIGN_CHALLENGEAPI_NAME | challenge-api                                                       |
+| FEIGN_CHALLENGEAPI_URL  | http://challenge-api.luizalabs.com/api                              |
 
 Caso esteja utilizando o Intellij (recomendado), utilize as variáveis abaixo:
 
@@ -90,6 +93,6 @@ Para rodar o projeto, utilize a própria IDE (Intellij), seguindo os seguintes p
 
 **OBS:** Execute o passo **Ambiente** antes de iniciar o projeto.
 
-- Abra o diretório **src\main\java\com\luizalabs\api\clients**
-- Com o diretório aberto, clique com o botão direito do mouse em cima de **ClientsApplication**
-- Selecione a opção **Run ClientsApplication.main()**
+- Abra o diretório **src\main\java\com\luizalabs\api\clients**.
+- Com o diretório aberto, clique com o botão direito do mouse em cima de **ClientsApplication**.
+- Selecione a opção **Run ClientsApplication.main()**.

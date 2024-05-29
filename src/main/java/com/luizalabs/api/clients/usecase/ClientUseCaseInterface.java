@@ -19,5 +19,5 @@ public interface ClientUseCaseInterface {
 
     Client getClientById(@NonNull Integer id) throws NotFoundException;
 
-    Client updateClient(@NonNull UpdateClientRequestDTO requestBody) throws BadRequestException, NotFoundException;
+    Client updateClient(@NonNull UpdateClientRequestDTO requestBody) throws ConflictException, NotFoundException;
 }

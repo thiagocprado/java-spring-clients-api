@@ -2,6 +2,7 @@ package com.luizalabs.api.clients.common.controller;
 
 import com.luizalabs.api.clients.common.dto.DefaultErrorMessageDTO;
 import com.luizalabs.api.clients.exception.BadRequestException;
+import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 
 import org.springframework.core.annotation.Order;
@@ -18,6 +19,14 @@ import java.util.List;
 @RestControllerAdvice
 @Order(0)
 public class ControllerAdviceRest {
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<List<DefaultErrorMessageDTO.ErrorMessage>> badRequestErrorHandler(final BadRequestException e) {
+        return ResponseEntity.status(e.getStatusCode())
+                .body(Collections.singletonList(DefaultErrorMessageDTO.ErrorMessage.builder()
+                        .code(HttpStatus.BAD_REQUEST.value())
+                        .errorMessage(e.getMessage())
+                        .build()));
+    }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<List<DefaultErrorMessageDTO.ErrorMessage>> notFoundErrorHandler(final NotFoundException e) {
@@ -28,11 +37,11 @@ public class ControllerAdviceRest {
                         .build()));
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<List<DefaultErrorMessageDTO.ErrorMessage>> badRequestErrorHandler(final BadRequestException e) {
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<List<DefaultErrorMessageDTO.ErrorMessage>> badRequestErrorHandler(final ConflictException e) {
         return ResponseEntity.status(e.getStatusCode())
                 .body(Collections.singletonList(DefaultErrorMessageDTO.ErrorMessage.builder()
-                        .code(HttpStatus.BAD_REQUEST.value())
+                        .code(HttpStatus.CONFLICT.value())
                         .errorMessage(e.getMessage())
                         .build()));
     }

@@ -1,10 +1,7 @@
 
 package com.luizalabs.api.clients.api.v1.dto.client.request;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,6 +18,7 @@ public class UpdateClientRequestDTO implements Serializable {
     @NotNull(message = "Id não pode ser nulo!")
     private Integer id;
 
+    @Pattern(regexp = "^[a-zA-ZÀ-ú'\\- ]+$", message = "Nome não pode conter caracteres numéricos!")
     @NotBlank(message = "Nome do cliente não pode estar em branco!")
     @NotNull(message = "Nome do cliente não pode ser nulo!")
     private String name;

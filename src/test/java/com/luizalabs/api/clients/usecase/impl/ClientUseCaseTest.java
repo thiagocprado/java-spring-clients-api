@@ -124,7 +124,7 @@ public class ClientUseCaseTest extends BaseTests {
     }
 
     @Test
-    void updateClient() throws BadRequestException, NotFoundException {
+    void updateClient() throws ConflictException, NotFoundException {
         var clientRepository = ClientSeeder.clientRepository();
         var clientRequest = ClientSeeder.updateClientRequestDTO();
 
@@ -158,6 +158,6 @@ public class ClientUseCaseTest extends BaseTests {
         Mockito.when(this.clientRepository.findById(anyInt())).thenReturn(Optional.ofNullable(clientRepository));
         Mockito.when(this.clientRepository.findByEmail(anyString())).thenReturn(Optional.ofNullable(clientRepositoryAlternative));
 
-        assertThrows(BadRequestException.class, () -> this.clientUseCase.updateClient(clientRequest));
+        assertThrows(ConflictException.class, () -> this.clientUseCase.updateClient(clientRequest));
     }
 }

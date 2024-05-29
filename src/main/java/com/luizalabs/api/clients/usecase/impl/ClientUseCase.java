@@ -84,7 +84,7 @@ public class ClientUseCase implements ClientUseCaseInterface {
     }
 
     @Override
-    public Client updateClient(@NonNull UpdateClientRequestDTO requestBody) throws BadRequestException, NotFoundException {
+    public Client updateClient(@NonNull UpdateClientRequestDTO requestBody) throws ConflictException, NotFoundException {
         var clientExists = this.clientRepository.findById(requestBody.getId());
 
         if (clientExists.isEmpty()) {
@@ -94,7 +94,7 @@ public class ClientUseCase implements ClientUseCaseInterface {
         var emailExists = this.clientRepository.findByEmail(requestBody.getEmail());
 
         if (emailExists.isPresent() && !clientExists.get().getEmail().equals(requestBody.getEmail())) {
-            throw new BadRequestException("Email já cadastrado!");
+            throw new ConflictException("Email já cadastrado!");
         }
 
         clientExists.get().setName(requestBody.getName());
