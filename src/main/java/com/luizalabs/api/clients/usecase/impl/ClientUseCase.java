@@ -1,13 +1,11 @@
 package com.luizalabs.api.clients.usecase.impl;
 
 import com.luizalabs.api.clients.api.v1.dto.client.request.CreateClientRequestDTO;
-import com.luizalabs.api.clients.api.v1.dto.client.request.GetAllClientsRequestDTO;
 import com.luizalabs.api.clients.api.v1.dto.client.request.UpdateClientRequestDTO;
 import com.luizalabs.api.clients.common.dto.PaginatedResultDTO;
 import com.luizalabs.api.clients.common.dto.PaginationDTO;
 import com.luizalabs.api.clients.common.helper.JsonHelper;
 import com.luizalabs.api.clients.entity.Client;
-import com.luizalabs.api.clients.exception.BadRequestException;
 import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.repository.ClientFavoriteProductRepository;
@@ -60,8 +58,8 @@ public class ClientUseCase implements ClientUseCaseInterface {
     }
 
     @Override
-    public PaginatedResultDTO<Client> getAllClients(@NonNull GetAllClientsRequestDTO requestParams) {
-        var response = this.clientRepository.findAll(PageRequest.of((requestParams.getPage() - 1), requestParams.getPageSize()));
+    public PaginatedResultDTO<Client> getAllClients(@NonNull Integer page, @NonNull Integer pageSize) {
+        var response = this.clientRepository.findAll(PageRequest.of((page - 1), pageSize));
 
         var pagination = new PaginationDTO(
                 response.getPageable().getPageNumber() + 1,
@@ -84,8 +82,8 @@ public class ClientUseCase implements ClientUseCaseInterface {
     }
 
     @Override
-    public Client updateClient(@NonNull UpdateClientRequestDTO requestBody) throws ConflictException, NotFoundException {
-        var clientExists = this.clientRepository.findById(requestBody.getId());
+    public Client updateClient(@NonNull Integer id, @NonNull UpdateClientRequestDTO requestBody) throws ConflictException, NotFoundException {
+        var clientExists = this.clientRepository.findById(id);
 
         if (clientExists.isEmpty()) {
             throw new NotFoundException("Cliente não encontrado!");

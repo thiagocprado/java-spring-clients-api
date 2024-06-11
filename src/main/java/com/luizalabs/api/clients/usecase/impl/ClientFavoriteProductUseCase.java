@@ -1,15 +1,12 @@
 package com.luizalabs.api.clients.usecase.impl;
 
 import com.luizalabs.api.clients.api.v1.dto.clientFavoriteProduct.request.AddClientFavoriteProductRequestDTO;
-import com.luizalabs.api.clients.api.v1.dto.clientFavoriteProduct.request.DeleteClientFavoriteProductRequestDTO;
-import com.luizalabs.api.clients.api.v1.dto.clientFavoriteProduct.request.GetAllClientFavoriteProductsRequestDTO;
 import com.luizalabs.api.clients.common.dto.PaginatedResultDTO;
 import com.luizalabs.api.clients.common.dto.PaginationDTO;
 import com.luizalabs.api.clients.common.helper.JsonHelper;
 import com.luizalabs.api.clients.entity.ClientFavoriteProduct;
 import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.service.dto.ProductDTO;
-import com.luizalabs.api.clients.exception.BadRequestException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.repository.ClientFavoriteProductRepository;
 import com.luizalabs.api.clients.service.ProductService;
@@ -50,19 +47,19 @@ public class ClientFavoriteProductUseCase implements ClientFavoriteProductUseCas
     }
 
     @Override
-    public void deleteClientFavoriteProduct(@NonNull DeleteClientFavoriteProductRequestDTO requestParams) throws NotFoundException {
-        var productExistsForClient = this.clientFavoriteProductRepository.findByClientIdAndProductId(requestParams.getClientId(), requestParams.getProductId());
+    public void deleteClientFavoriteProduct(@NonNull Integer id, @NonNull String productId) throws NotFoundException {
+        var productExistsForClient = this.clientFavoriteProductRepository.findByClientIdAndProductId(id, productId);
 
         if (productExistsForClient.isEmpty()) {
             throw new NotFoundException("Produto não existe na lista do cliente!");
         }
 
-        this.clientFavoriteProductRepository.deleteByClientIdAndProductId(requestParams.getClientId(), requestParams.getProductId());
+        this.clientFavoriteProductRepository.deleteByClientIdAndProductId(id, productId);
     }
 
     @Override
-    public PaginatedResultDTO<ProductDTO> getClientFavoriteProducts(@NonNull GetAllClientFavoriteProductsRequestDTO requestParams) throws NotFoundException {
-        var response = this.clientFavoriteProductRepository.findAllByClientId(requestParams.getClientId(), PageRequest.of((requestParams.getPage() - 1), requestParams.getPageSize()));
+    public PaginatedResultDTO<ProductDTO> getClientFavoriteProducts(@NonNull Integer id, @NonNull Integer page, @NonNull Integer pageSize) throws NotFoundException {
+        var response = this.clientFavoriteProductRepository.findAllByClientId(id, PageRequest.of((page - 1), pageSize));
 
         var pagination = new PaginationDTO(
                 response.getPageable().getPageNumber() + 1,

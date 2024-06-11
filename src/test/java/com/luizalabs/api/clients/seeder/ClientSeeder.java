@@ -1,7 +1,6 @@
 package com.luizalabs.api.clients.seeder;
 
 import com.luizalabs.api.clients.api.v1.dto.client.request.CreateClientRequestDTO;
-import com.luizalabs.api.clients.api.v1.dto.client.request.GetAllClientsRequestDTO;
 import com.luizalabs.api.clients.api.v1.dto.client.request.UpdateClientRequestDTO;
 import com.luizalabs.api.clients.entity.Client;
 import org.springframework.data.domain.Page;

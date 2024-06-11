@@ -8,16 +8,19 @@ server:
   port: ${SERVER_PORT}
 
 spring:
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    name: ${SPRING_DATASOURCE_NAME:db_clients}
   flyway:
     url: ${SPRING_FLYWAY_URL}
     user: ${SPRING_FLYWAY_USERNAME}
     password: ${SPRING_FLYWAY_PASSWORD}
-
-jdbc:
-  dbClients:
-    url: ${JDBC_DBCLIENTS_URL}
-    username: ${JDBC_DBCLIENTS_USERNAME}
-    password: ${JDBC_DBCLIENTS_PASSWORD}
 
 feign:
   challengeApi:

@@ -15,9 +15,9 @@ public interface ClientUseCaseInterface {
 
     void deleteClient(@NonNull Integer id) throws NotFoundException;
 
-    PaginatedResultDTO<Client> getAllClients(@NonNull GetAllClientsRequestDTO requestParams);
+    PaginatedResultDTO<Client> getAllClients(@NonNull Integer page, @NonNull Integer pageSize);
 
     Client getClientById(@NonNull Integer id) throws NotFoundException;
 
-    Client updateClient(@NonNull UpdateClientRequestDTO requestBody) throws ConflictException, NotFoundException;
+    Client updateClient(@NonNull Integer id, @NonNull UpdateClientRequestDTO requestBody) throws ConflictException, NotFoundException;
 }

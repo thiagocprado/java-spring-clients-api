@@ -1,8 +1,6 @@
 package com.luizalabs.api.clients.seeder;
 
 import com.luizalabs.api.clients.api.v1.dto.clientFavoriteProduct.request.AddClientFavoriteProductRequestDTO;
-import com.luizalabs.api.clients.api.v1.dto.clientFavoriteProduct.request.DeleteClientFavoriteProductRequestDTO;
-import com.luizalabs.api.clients.api.v1.dto.clientFavoriteProduct.request.GetAllClientFavoriteProductsRequestDTO;
 import com.luizalabs.api.clients.entity.ClientFavoriteProduct;
 import com.luizalabs.api.clients.service.dto.ProductDTO;
 import org.springframework.data.domain.Page;

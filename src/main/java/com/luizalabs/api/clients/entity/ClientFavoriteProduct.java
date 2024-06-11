@@ -12,9 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,10 +19,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "TB_CLIENTS_FAVORITE_PRODUCTS")
-public class ClientFavoriteProduct implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 2763385211076537126L;
-
+public class ClientFavoriteProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
