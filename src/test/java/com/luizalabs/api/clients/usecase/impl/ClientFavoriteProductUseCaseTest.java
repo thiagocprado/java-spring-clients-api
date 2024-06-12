@@ -1,8 +1,6 @@
 package com.luizalabs.api.clients.usecase.impl;
 
 import com.luizalabs.api.clients.BaseTests;
-import com.luizalabs.api.clients.common.helper.JsonHelper;
-import com.luizalabs.api.clients.exception.BadRequestException;
 import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.repository.ClientFavoriteProductRepository;
@@ -36,7 +34,7 @@ public class ClientFavoriteProductUseCaseTest extends BaseTests {
     @BeforeEach
     void setUp() {
         openMocks(this);
-        this.clientFavoriteProductUseCase = new ClientFavoriteProductUseCase(clientFavoriteProductRepository, productService, new JsonHelper());
+        this.clientFavoriteProductUseCase = new ClientFavoriteProductUseCase(clientFavoriteProductRepository, productService);
     }
 
     @Test
@@ -64,39 +62,47 @@ public class ClientFavoriteProductUseCaseTest extends BaseTests {
 
     @Test
     void deleteClientFavoriteProduct() throws NotFoundException {
-        var clientFavoriteProductRequest = ClientFavoriteProductSeeder.deleteClientFavoriteProductRequestDTO();
         var clientFavoriteProductRepository = ClientFavoriteProductSeeder.clientFavoriteProductRepostiory();
 
         Mockito.when(this.clientFavoriteProductRepository.findByClientIdAndProductId(anyInt(), anyString())).thenReturn(Optional.ofNullable(clientFavoriteProductRepository));
         Mockito.doNothing().when(this.clientFavoriteProductRepository).deleteByClientIdAndProductId(anyInt(), anyString());
 
-        this.clientFavoriteProductUseCase.deleteClientFavoriteProduct(clientFavoriteProductRequest);
+        this.clientFavoriteProductUseCase.deleteClientFavoriteProduct(1, "product-id-1");
 
         Mockito.verify(this.clientFavoriteProductRepository, Mockito.times(1)).deleteByClientIdAndProductId(anyInt(), anyString());
     }
 
     @Test
     void deleteClientFavoriteProductNotFound() {
-        var clientFavoriteProductRequest = ClientFavoriteProductSeeder.deleteClientFavoriteProductRequestDTO();
-
         Mockito.when(this.clientFavoriteProductRepository.findByClientIdAndProductId(anyInt(), anyString())).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> this.clientFavoriteProductUseCase.deleteClientFavoriteProduct(clientFavoriteProductRequest));
+        assertThrows(NotFoundException.class, () -> this.clientFavoriteProductUseCase.deleteClientFavoriteProduct(anyInt(), anyString()));
     }
 
     @Test
     void getClientFavoriteProducts() throws NotFoundException {
         var clientFavoriteProductsRepository = ClientFavoriteProductSeeder.clientFavoriteProductsRepository();
-        var clientFavoriteProductsRequest = ClientFavoriteProductSeeder.getAllClientFavoriteProductsRequestDTO();
-        var product = ClientFavoriteProductSeeder.productDTO();
+        var product = ClientFavoriteProductSeeder.productRecordDTO();
 
         Mockito.when(this.productService.getProductDetails(anyString())).thenReturn(product);
         Mockito.when(this.clientFavoriteProductRepository.findAllByClientId(anyInt(), any(PageRequest.class))).thenReturn(clientFavoriteProductsRepository);
 
-        var response = this.clientFavoriteProductUseCase.getClientFavoriteProducts(clientFavoriteProductsRequest);
+        var response = this.clientFavoriteProductUseCase.getClientFavoriteProducts(1, 1, 10);
 
-        assertFalse(response.getResults().isEmpty());
-        assertEquals(product.getId(), response.getResults().get(0).getId());
+        assertFalse(response.results().isEmpty());
+        assertEquals(product.id(), response.results().get(0).id());
         assertEquals(clientFavoriteProductsRepository.getTotalElements(), 1);
+    }
+
+    @Test
+    void getClientFavoriteProductsNotFound() {
+        var clientFavoriteProductsRepository = ClientFavoriteProductSeeder.clientFavoriteProductsRepository();
+
+        Mockito.when(this.clientFavoriteProductRepository.findAllByClientId(anyInt(), any(PageRequest.class))).thenReturn(clientFavoriteProductsRepository);
+        Mockito.when(this.productService.getProductDetails(anyString())).thenAnswer(invocation -> {
+            throw new NotFoundException("Produto não encontrado!");
+        });
+
+        assertThrows(NotFoundException.class, () -> this.clientFavoriteProductUseCase.getClientFavoriteProducts(1, 1, 10));
     }
 }

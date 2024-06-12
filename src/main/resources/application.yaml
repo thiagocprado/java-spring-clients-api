@@ -16,7 +16,7 @@ spring:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
-    name: ${SPRING_DATASOURCE_NAME:db_clients}
+    name: ${SPRING_DATASOURCE_NAME}
   flyway:
     url: ${SPRING_FLYWAY_URL}
     user: ${SPRING_FLYWAY_USERNAME}

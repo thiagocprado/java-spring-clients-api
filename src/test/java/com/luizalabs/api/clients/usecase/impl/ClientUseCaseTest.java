@@ -1,8 +1,6 @@
 package com.luizalabs.api.clients.usecase.impl;
 
 import com.luizalabs.api.clients.BaseTests;
-import com.luizalabs.api.clients.common.helper.JsonHelper;
-import com.luizalabs.api.clients.exception.BadRequestException;
 import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.repository.ClientFavoriteProductRepository;
@@ -36,7 +34,7 @@ public class ClientUseCaseTest extends BaseTests {
     @BeforeEach
     void setUp() {
         openMocks(this);
-        this.clientUseCase = new ClientUseCase(clientRepository, clientFavoriteProductRepository, new JsonHelper());
+        this.clientUseCase = new ClientUseCase(clientRepository, clientFavoriteProductRepository);
     }
 
     @Test
@@ -87,18 +85,17 @@ public class ClientUseCaseTest extends BaseTests {
     @Test
     void getAllClients() {
         var clientsRepository = ClientSeeder.clientsRepository();
-        var clientsRequest = ClientSeeder.getAllClientsRequestDTO();
 
         Mockito.when(this.clientRepository.findAll(any(PageRequest.class))).thenReturn(clientsRepository);
-        var response = this.clientUseCase.getAllClients(clientsRequest);
+        var response = this.clientUseCase.getAllClients(1, 10);
 
-        assertFalse(response.getResults().isEmpty());
+        assertFalse(response.results().isEmpty());
 
         var firstClient = clientsRepository.get().findFirst().orElseThrow();
 
-        assertEquals(firstClient.getId(), response.getResults().get(0).getId());
-        assertEquals(firstClient.getName(), response.getResults().get(0).getName());
-        assertEquals(firstClient.getEmail(), response.getResults().get(0).getEmail());
+        assertEquals(firstClient.getId(), response.results().get(0).getId());
+        assertEquals(firstClient.getName(), response.results().get(0).getName());
+        assertEquals(firstClient.getEmail(), response.results().get(0).getEmail());
         assertEquals(clientsRepository.getTotalElements(), 1);
     }
 
@@ -131,7 +128,7 @@ public class ClientUseCaseTest extends BaseTests {
         Mockito.when(this.clientRepository.findById(anyInt())).thenReturn(Optional.ofNullable(clientRepository));
         Mockito.when(this.clientRepository.save(any())).thenReturn(clientRepository);
 
-        var response = this.clientUseCase.updateClient(clientRequest);
+        var response = this.clientUseCase.updateClient(anyInt(), clientRequest);
 
         assert clientRepository != null;
         assertEquals(clientRepository.getId(), response.getId());
@@ -145,7 +142,7 @@ public class ClientUseCaseTest extends BaseTests {
 
         Mockito.when(this.clientRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> this.clientUseCase.updateClient(clientRequest));
+        assertThrows(NotFoundException.class, () -> this.clientUseCase.updateClient(anyInt(), clientRequest));
     }
 
     @Test
@@ -158,6 +155,6 @@ public class ClientUseCaseTest extends BaseTests {
         Mockito.when(this.clientRepository.findById(anyInt())).thenReturn(Optional.ofNullable(clientRepository));
         Mockito.when(this.clientRepository.findByEmail(anyString())).thenReturn(Optional.ofNullable(clientRepositoryAlternative));
 
-        assertThrows(ConflictException.class, () -> this.clientUseCase.updateClient(clientRequest));
+        assertThrows(ConflictException.class, () -> this.clientUseCase.updateClient(anyInt(), clientRequest));
     }
 }

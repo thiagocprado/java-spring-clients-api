@@ -17,16 +17,10 @@ O banco de dados utilizado para este projeto foi o **MySQL** na versão 8.0.
 - Com o terminal na raiz do projeto execute o comando abaixo:
 
 ```
-$ docker build -t mysql_image .
+$ docker-compose up -d
 ```
 
-- Após finalizar a execução do comando anterior, execute o seguinte comando:
-
-```
-$ docker run -d --name mysql_container -p 3306:3306 mysql_image
-```
-
-Com os comandos acima, temos nosso container do mysql rodando.
+Com o comando acima, temos nosso container do mysql rodando.
 
 ## Intellij
 
@@ -77,6 +71,7 @@ Para rodar o projeto é preciso configurar as variáveis de ambiente do projeto:
 | SPRING_DATASOURCE_URL      | jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true |
 | SPRING_DATASOURCE_USERNAME | user_clients                                                        |
 | SPRING_DATASOURCE_PASSWORD | password_clients                                                    |
+| SPRING_DATASOURCE_NAME     | db_clients                                                          |
 |                            |                                                                     |
 | FEIGN_CHALLENGEAPI_NAME    | challenge-api                                                       |
 | FEIGN_CHALLENGEAPI_URL     | http://challenge-api.luizalabs.com/api                              |
@@ -84,7 +79,7 @@ Para rodar o projeto é preciso configurar as variáveis de ambiente do projeto:
 Caso esteja utilizando o Intellij (recomendado), utilize as variáveis abaixo:
 
 ```
-APPLICATION_ENV=development;FEIGN_CHALLENGEAPI_NAME=challenge-api;FEIGN_CHALLENGEAPI_URL=http://challenge-api.luizalabs.com/api;SPRING_DATASOURCE_PASSWORD=password_clients;SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true;SPRING_DATASOURCE_USERNAME=user_clients;SERVER_PORT=8080;SPRING_FLYWAY_PASSWORD=password_clients;SPRING_FLYWAY_URL=jdbc:mysql://localhost:3306/db_clients;SPRING_FLYWAY_USERNAME=user_clients
+APPLICATION_ENV=development;FEIGN_CHALLENGEAPI_NAME=challenge-api;FEIGN_CHALLENGEAPI_URL=http://challenge-api.luizalabs.com/api;SERVER_PORT=8080;SPRING_DATASOURCE_PASSWORD=password_clients;SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true;SPRING_DATASOURCE_USERNAME=user_clients;SPRING_FLYWAY_PASSWORD=password_clients;SPRING_FLYWAY_URL=jdbc:mysql://localhost:3306/db_clients;SPRING_FLYWAY_USERNAME=user_clients;SPRING_DATASOURCE_NAME=db_clients
 ```
 
 ## Execução do projeto

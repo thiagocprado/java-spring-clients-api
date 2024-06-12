@@ -1,18 +1,17 @@
 package com.luizalabs.api.clients.usecase.impl;
 
-import com.luizalabs.api.clients.api.v1.dto.clientFavoriteProduct.request.AddClientFavoriteProductRequestDTO;
-import com.luizalabs.api.clients.common.dto.PaginatedResultDTO;
-import com.luizalabs.api.clients.common.dto.PaginationDTO;
-import com.luizalabs.api.clients.common.helper.JsonHelper;
+import com.luizalabs.api.clients.dto.ClientFavoriteProductRecordDTO;
+import com.luizalabs.api.clients.dto.PaginatedRecordDTO;
+import com.luizalabs.api.clients.dto.PaginationRecordDTO;
 import com.luizalabs.api.clients.entity.ClientFavoriteProduct;
 import com.luizalabs.api.clients.exception.ConflictException;
-import com.luizalabs.api.clients.service.dto.ProductDTO;
 import com.luizalabs.api.clients.exception.NotFoundException;
 import com.luizalabs.api.clients.repository.ClientFavoriteProductRepository;
 import com.luizalabs.api.clients.service.ProductService;
+import com.luizalabs.api.clients.dto.ProductRecordDTO;
 import com.luizalabs.api.clients.usecase.ClientFavoriteProductUseCaseInterface;
 import jakarta.transaction.Transactional;
-import lombok.NonNull;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -23,31 +22,29 @@ import java.util.ArrayList;
 public class ClientFavoriteProductUseCase implements ClientFavoriteProductUseCaseInterface {
     private final ClientFavoriteProductRepository clientFavoriteProductRepository;
     private final ProductService productService;
-    private final JsonHelper jsonHelper;
 
-    public ClientFavoriteProductUseCase(ClientFavoriteProductRepository clientFavoriteProductRepository, ProductService productService, JsonHelper jsonHelper) {
+    public ClientFavoriteProductUseCase(ClientFavoriteProductRepository clientFavoriteProductRepository, ProductService productService) {
         this.clientFavoriteProductRepository = clientFavoriteProductRepository;
         this.productService = productService;
-        this.jsonHelper = jsonHelper;
     }
 
     @Override
-    public ClientFavoriteProduct addClientFavoriteProduct(@NonNull AddClientFavoriteProductRequestDTO requestBody) throws ConflictException, NotFoundException {
-        this.getProductDetails(requestBody.getProductId());
+    public ClientFavoriteProduct addClientFavoriteProduct(ClientFavoriteProductRecordDTO requestBody) throws ConflictException, NotFoundException {
+        this.getProductDetails(requestBody.productId());
 
-        var productAlreadyAdded = this.clientFavoriteProductRepository.findByClientIdAndProductId(requestBody.getClientId(), requestBody.getProductId());
+        var productAlreadyAdded = this.clientFavoriteProductRepository.findByClientIdAndProductId(requestBody.clientId(), requestBody.productId());
         if (productAlreadyAdded.isPresent()) {
             throw new ConflictException("Produto já cadastrado para o cliente!");
         }
 
-        var clientFavoriteProductJson = this.jsonHelper.convertObjectToJson(requestBody);
-        var clientFavoriteProduct = this.jsonHelper.convertJsonToClass(clientFavoriteProductJson, ClientFavoriteProduct.class);
+        var clientFavoriteProduct = new ClientFavoriteProduct();
+        BeanUtils.copyProperties(requestBody, clientFavoriteProduct);
 
         return this.clientFavoriteProductRepository.save(clientFavoriteProduct);
     }
 
     @Override
-    public void deleteClientFavoriteProduct(@NonNull Integer id, @NonNull String productId) throws NotFoundException {
+    public void deleteClientFavoriteProduct(Integer id, String productId) throws NotFoundException {
         var productExistsForClient = this.clientFavoriteProductRepository.findByClientIdAndProductId(id, productId);
 
         if (productExistsForClient.isEmpty()) {
@@ -58,26 +55,22 @@ public class ClientFavoriteProductUseCase implements ClientFavoriteProductUseCas
     }
 
     @Override
-    public PaginatedResultDTO<ProductDTO> getClientFavoriteProducts(@NonNull Integer id, @NonNull Integer page, @NonNull Integer pageSize) throws NotFoundException {
+    public PaginatedRecordDTO<ProductRecordDTO> getClientFavoriteProducts(Integer id, Integer page, Integer pageSize) throws NotFoundException {
         var response = this.clientFavoriteProductRepository.findAllByClientId(id, PageRequest.of((page - 1), pageSize));
 
-        var pagination = new PaginationDTO(
-                response.getPageable().getPageNumber() + 1,
-                response.getPageable().getPageSize(),
-                response.isEmpty() ? 0 : (int) response.getTotalElements()
-        );
+        var pagination = PaginationRecordDTO.builder().page(response.getPageable().getPageNumber() + 1).pageSize(response.getPageable().getPageSize()).totalElements(response.getTotalElements()).build();
 
-        var products = new ArrayList<ProductDTO>();
+        var products = new ArrayList<ProductRecordDTO>();
         for (ClientFavoriteProduct product : response.toList()) {
             var productDetails = this.getProductDetails(product.getProductId());
 
             products.add(productDetails);
         }
 
-        return new PaginatedResultDTO<>(products, pagination);
+        return new PaginatedRecordDTO<>(pagination, products);
     }
 
-    private ProductDTO getProductDetails(@NonNull String id) throws NotFoundException {
+    private ProductRecordDTO getProductDetails(String id) throws NotFoundException {
         try {
             return this.productService.getProductDetails(id);
         } catch (Exception e) {

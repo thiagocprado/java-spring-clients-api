@@ -1,4 +1,4 @@
-package com.luizalabs.api.clients.common.dto;
+package com.luizalabs.api.clients.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,19 +7,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DefaultErrorMessageDTO<T> implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = -2754997796826937592L;
-
+public class DefaultErrorMessageDTO {
     private ErrorMessage error;
 
     @NoArgsConstructor
@@ -28,11 +21,7 @@ public class DefaultErrorMessageDTO<T> implements Serializable {
     @Builder
     @JsonIgnoreProperties(ignoreUnknown = true)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class ErrorMessage implements Serializable {
-
-        @Serial
-        private static final long serialVersionUID = 482881720014522629L;
-
+    public static class ErrorMessage {
         private Integer code;
         private String errorMessage;
     }

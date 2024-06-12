@@ -1,10 +1,8 @@
 package com.luizalabs.api.clients.usecase.impl;
 
-import com.luizalabs.api.clients.api.v1.dto.client.request.CreateClientRequestDTO;
-import com.luizalabs.api.clients.api.v1.dto.client.request.UpdateClientRequestDTO;
-import com.luizalabs.api.clients.common.dto.PaginatedResultDTO;
-import com.luizalabs.api.clients.common.dto.PaginationDTO;
-import com.luizalabs.api.clients.common.helper.JsonHelper;
+import com.luizalabs.api.clients.dto.ClientRecordDTO;
+import com.luizalabs.api.clients.dto.PaginatedRecordDTO;
+import com.luizalabs.api.clients.dto.PaginationRecordDTO;
 import com.luizalabs.api.clients.entity.Client;
 import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
@@ -12,7 +10,7 @@ import com.luizalabs.api.clients.repository.ClientFavoriteProductRepository;
 import com.luizalabs.api.clients.repository.ClientRepository;
 import com.luizalabs.api.clients.usecase.ClientUseCaseInterface;
 import jakarta.transaction.Transactional;
-import lombok.NonNull;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,31 +20,29 @@ import org.springframework.stereotype.Service;
 public class ClientUseCase implements ClientUseCaseInterface {
     private final ClientRepository clientRepository;
     private final ClientFavoriteProductRepository clientFavoriteProductRepository;
-    private final JsonHelper jsonHelper;
 
     @Autowired
-    public ClientUseCase(ClientRepository clientRepository, ClientFavoriteProductRepository clientFavoriteProductRepository, JsonHelper jsonHelper) {
+    public ClientUseCase(ClientRepository clientRepository, ClientFavoriteProductRepository clientFavoriteProductRepository) {
         this.clientRepository = clientRepository;
         this.clientFavoriteProductRepository = clientFavoriteProductRepository;
-        this.jsonHelper = jsonHelper;
     }
 
     @Override
-    public Client createClient(@NonNull CreateClientRequestDTO requestBody) throws ConflictException {
-        var clientExists = this.clientRepository.findByEmail(requestBody.getEmail());
+    public Client createClient(ClientRecordDTO requestBody) throws ConflictException {
+        var clientExists = this.clientRepository.findByEmail(requestBody.email());
 
         if (clientExists.isPresent()) {
             throw new ConflictException("Cliente já cadastrado!");
         }
 
-        var clientJson = this.jsonHelper.convertObjectToJson(requestBody);
-        var client = this.jsonHelper.convertJsonToClass(clientJson, Client.class);
+        var client = new Client();
+        BeanUtils.copyProperties(requestBody, client);
 
         return this.clientRepository.save(client);
     }
 
     @Override
-    public void deleteClient(@NonNull Integer id) throws NotFoundException {
+    public void deleteClient(Integer id) throws NotFoundException {
         var response = this.clientRepository.findById(id);
 
         if (response.isEmpty()) {
@@ -58,20 +54,20 @@ public class ClientUseCase implements ClientUseCaseInterface {
     }
 
     @Override
-    public PaginatedResultDTO<Client> getAllClients(@NonNull Integer page, @NonNull Integer pageSize) {
+    public PaginatedRecordDTO<Client> getAllClients(Integer page, Integer pageSize) {
         var response = this.clientRepository.findAll(PageRequest.of((page - 1), pageSize));
 
-        var pagination = new PaginationDTO(
-                response.getPageable().getPageNumber() + 1,
-                response.getPageable().getPageSize(),
-                response.isEmpty() ? 0 : (int) response.getTotalElements()
-        );
+        var pagination = PaginationRecordDTO.builder()
+                .page(response.getPageable().getPageNumber() + 1)
+                .pageSize(response.getPageable().getPageSize())
+                .totalElements(response.getTotalElements())
+                .build();
 
-        return new PaginatedResultDTO<>(response.toList(), pagination);
+        return new PaginatedRecordDTO<>(pagination, response.toList());
     }
 
     @Override
-    public Client getClientById(@NonNull Integer id) throws NotFoundException {
+    public Client getClientById(Integer id) throws NotFoundException {
         var response = this.clientRepository.findById(id);
 
         if (response.isEmpty()) {
@@ -82,21 +78,21 @@ public class ClientUseCase implements ClientUseCaseInterface {
     }
 
     @Override
-    public Client updateClient(@NonNull Integer id, @NonNull UpdateClientRequestDTO requestBody) throws ConflictException, NotFoundException {
+    public Client updateClient(Integer id, ClientRecordDTO requestBody) throws ConflictException, NotFoundException {
         var clientExists = this.clientRepository.findById(id);
 
         if (clientExists.isEmpty()) {
             throw new NotFoundException("Cliente não encontrado!");
         }
 
-        var emailExists = this.clientRepository.findByEmail(requestBody.getEmail());
+        var emailExists = this.clientRepository.findByEmail(requestBody.email());
 
-        if (emailExists.isPresent() && !clientExists.get().getEmail().equals(requestBody.getEmail())) {
+        if (emailExists.isPresent() && !clientExists.get().getEmail().equals(requestBody.email())) {
             throw new ConflictException("Email já cadastrado!");
         }
 
-        clientExists.get().setName(requestBody.getName());
-        clientExists.get().setEmail(requestBody.getEmail());
+        clientExists.get().setName(requestBody.name());
+        clientExists.get().setEmail(requestBody.email());
 
         return this.clientRepository.save(clientExists.get());
     }

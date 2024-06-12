@@ -1,19 +1,18 @@
 package com.luizalabs.api.clients.usecase;
 
-import com.luizalabs.api.clients.api.v1.dto.clientFavoriteProduct.request.AddClientFavoriteProductRequestDTO;
-import com.luizalabs.api.clients.common.dto.PaginatedResultDTO;
+import com.luizalabs.api.clients.dto.ClientFavoriteProductRecordDTO;
+import com.luizalabs.api.clients.dto.PaginatedRecordDTO;
 import com.luizalabs.api.clients.entity.ClientFavoriteProduct;
 import com.luizalabs.api.clients.exception.ConflictException;
 import com.luizalabs.api.clients.exception.NotFoundException;
-import com.luizalabs.api.clients.service.dto.ProductDTO;
-import lombok.NonNull;
+import com.luizalabs.api.clients.dto.ProductRecordDTO;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface ClientFavoriteProductUseCaseInterface {
-    ClientFavoriteProduct addClientFavoriteProduct(@NonNull AddClientFavoriteProductRequestDTO requestBody) throws ConflictException, NotFoundException;
+    ClientFavoriteProduct addClientFavoriteProduct(ClientFavoriteProductRecordDTO requestBody) throws ConflictException, NotFoundException;
 
-    void deleteClientFavoriteProduct(@NonNull Integer id, @NonNull String productId) throws NotFoundException;
+    void deleteClientFavoriteProduct(Integer id, String productId) throws NotFoundException;
 
-    PaginatedResultDTO<ProductDTO> getClientFavoriteProducts(@NonNull Integer id, @NonNull Integer page, @NonNull Integer pageSize) throws NotFoundException;
+    PaginatedRecordDTO<ProductRecordDTO> getClientFavoriteProducts(Integer id, Integer page, Integer pageSize) throws NotFoundException;
 }
