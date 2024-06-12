@@ -58,7 +58,7 @@ public class ClientFavoriteProductController {
     }
 
     @ResponseBody
-    @GetMapping("/{id}/")
+    @GetMapping("/{id}")
     public ResponseEntity<PaginatedRecordDTO<ProductRecordDTO>> getClientFavoriteProducts(@PathVariable Integer id, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer pageSize) throws NotFoundException {
         this.clientUseCase.getClientById(id);
 

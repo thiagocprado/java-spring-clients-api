@@ -61,25 +61,25 @@ Para rodar o projeto é preciso configurar as variáveis de ambiente do projeto:
 | Variável                   | Valor                                                               |
 |----------------------------|---------------------------------------------------------------------|
 | APPLICATION_ENV            | development                                                         |
-|                            |                                                                     |
-| SERVER_PORT                | 8080                                                                |
-|                            |                                                                     |
-| SPRING_FLYWAY_URL          | jdbc:mysql://localhost:3306/db_clients                              |
-| SPRING_FLYWAY_USERNAME     | user_clients                                                        |
-| SPRING_FLYWAY_PASSWORD     | password_clients                                                    |
-|                            |                                                                     |
-| SPRING_DATASOURCE_URL      | jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true |
-| SPRING_DATASOURCE_USERNAME | user_clients                                                        |
-| SPRING_DATASOURCE_PASSWORD | password_clients                                                    |
-| SPRING_DATASOURCE_NAME     | db_clients                                                          |
-|                            |                                                                     |
+|                            |
 | FEIGN_CHALLENGEAPI_NAME    | challenge-api                                                       |
 | FEIGN_CHALLENGEAPI_URL     | http://challenge-api.luizalabs.com/api                              |
+|                            |
+| SERVER_PORT                | 8080                                                                |
+|                            |                                                                     |
+| SPRING_DATASOURCE_NAME     | db_clients                                                          |
+| SPRING_DATASOURCE_PASSWORD | password_clients                                                    |
+| SPRING_DATASOURCE_URL      | jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true |
+| SPRING_DATASOURCE_USERNAME | user_clients                                                        |
+|                            |                                                                     |
+| SPRING_FLYWAY_PASSWORD     | password_clients                                                    |
+| SPRING_FLYWAY_URL          | jdbc:mysql://localhost:3306/db_clients                              |
+| SPRING_FLYWAY_USERNAME     | user_clients                                                        |
 
 Caso esteja utilizando o Intellij (recomendado), utilize as variáveis abaixo:
 
 ```
-APPLICATION_ENV=development;FEIGN_CHALLENGEAPI_NAME=challenge-api;FEIGN_CHALLENGEAPI_URL=http://challenge-api.luizalabs.com/api;SERVER_PORT=8080;SPRING_DATASOURCE_PASSWORD=password_clients;SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true;SPRING_DATASOURCE_USERNAME=user_clients;SPRING_FLYWAY_PASSWORD=password_clients;SPRING_FLYWAY_URL=jdbc:mysql://localhost:3306/db_clients;SPRING_FLYWAY_USERNAME=user_clients;SPRING_DATASOURCE_NAME=db_clients
+APPLICATION_ENV=development;FEIGN_CHALLENGEAPI_NAME=challenge-api;FEIGN_CHALLENGEAPI_URL=http://challenge-api.luizalabs.com/api;SERVER_PORT=8080;SPRING_DATASOURCE_NAME=db_clients;SPRING_DATASOURCE_PASSWORD=password_clients;SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/db_clients?allowPublicKeyRetrieval=true;SPRING_DATASOURCE_USERNAME=user_clients;SPRING_FLYWAY_PASSWORD=password_clients;SPRING_FLYWAY_URL=jdbc:mysql://localhost:3306/db_clients;SPRING_FLYWAY_USERNAME=user_clients;
 ```
 
 ## Execução do projeto
