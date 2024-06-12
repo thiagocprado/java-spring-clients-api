@@ -48,7 +48,7 @@ public class ExceptionHandler {
         return ResponseEntity.status(e.getStatusCode())
                 .body(Collections.singletonList(DefaultErrorMessageDTO.ErrorMessage.builder()
                         .code(HttpStatus.NOT_FOUND.value())
-                        .errorMessage(e.getMessage())
+                        .errorMessage("Recurso não encontrado! Rota: " + e.getResourcePath())
                         .build()));
     }
 
