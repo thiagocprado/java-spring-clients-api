@@ -49,6 +49,7 @@ Abaixo está um tutorial de como importar uma collection no postman:
 
 Para rodar os testes, utilize a própria IDE (Intellij), seguindo os seguintes passos:
 
+- Antes de rodar os testes, certifique-se de estar com o docker instalado.
 - Abra o diretório **src\test\java\com\luizalabs\api\clients\usecase\impl**.
 - Com o diretório aberto, clique em um dos casos de teste com o botão direito do mouse.
 - Procure pela opção **More / Run Debug** ou **Mais / Rodar Debug**.

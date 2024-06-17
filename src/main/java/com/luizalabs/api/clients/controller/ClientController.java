@@ -42,10 +42,10 @@ public class ClientController {
 
     @ResponseBody
     @DeleteMapping("/{id}")
-    public ResponseEntity.BodyBuilder deleteClient(@PathVariable Integer id) throws NotFoundException {
+    public ResponseEntity<Object> deleteClient(@PathVariable Integer id) throws NotFoundException {
         this.clientUseCase.deleteClient(id);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
     @ResponseBody

@@ -11,11 +11,11 @@ import java.util.Optional;
 
 @Repository("clientFavoriteProductRepository")
 public interface ClientFavoriteProductRepository extends JpaRepository<ClientFavoriteProduct, Integer> {
-    Optional<ClientFavoriteProduct> findByClientIdAndProductId(@NonNull Integer clientId, @NonNull String productId);
+    Optional<ClientFavoriteProduct> findByClientIdAndProductId(Integer clientId, String productId);
 
-    void deleteByClientIdAndProductId(@NonNull Integer clientId, @NonNull String productId);
+    void deleteByClientIdAndProductId(Integer clientId, String productId);
 
-    void deleteByClientId(@NonNull Integer clientId);
+    void deleteByClientId(Integer clientId);
 
-    Page<ClientFavoriteProduct> findAllByClientId(@NonNull Integer clientId, @NonNull Pageable pageable);
+    Page<ClientFavoriteProduct> findAllByClientId(Integer clientId, Pageable pageable);
 }

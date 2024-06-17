@@ -49,12 +49,12 @@ public class ClientFavoriteProductController {
 
     @ResponseBody
     @DeleteMapping("/{id}/{productId}")
-    public ResponseEntity.BodyBuilder deleteClientFavoriteProduct(@PathVariable Integer id, @PathVariable String productId) throws NotFoundException {
+    public ResponseEntity<Object> deleteClientFavoriteProduct(@PathVariable Integer id, @PathVariable String productId) throws NotFoundException {
         this.clientUseCase.getClientById(id);
 
         this.clientFavoriteProductUseCase.deleteClientFavoriteProduct(id, productId);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
     @ResponseBody
